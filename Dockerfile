@@ -10,7 +10,7 @@ ENV LANG=en_US.UTF-8 \
 RUN set -ex && \
     echo 'https://mirror.tuna.tsinghua.edu.cn/alpine/v3.8/main' > /etc/apk/repositories && \
     echo 'https://mirror.tuna.tsinghua.edu.cn/alpine/v3.8/community' >> /etc/apk/repositories && \
-    apk update && apk add py-gevent
+    apk update
 
 RUN pip install --upgrade pip && pip config set gloabl.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
     pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pipenv
