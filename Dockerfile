@@ -10,10 +10,14 @@ ENV LANG=en_US.UTF-8 \
 RUN set -ex && \
     echo 'https://mirror.tuna.tsinghua.edu.cn/alpine/v3.8/main' > /etc/apk/repositories && \
     echo 'https://mirror.tuna.tsinghua.edu.cn/alpine/v3.8/community' >> /etc/apk/repositories && \
-    apk update
+    apk update && apk add --no-cache linux-headers build-base
 
-RUN pip install --upgrade pip && pip config set gloabl.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
-    pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pipenv
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir --upgrade pip && \
+    pip config set gloabl.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
+    pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir pipenv psutil gevent && \
+    pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir gevent
+
+RUN apk del build-base linux-headers
 
 # -- Install Application into container:
 RUN set -ex && mkdir /app
@@ -26,6 +30,9 @@ ONBUILD COPY Pipfile.lock Pipfile.lock
 
 # -- Install dependencies:
 ONBUILD RUN set -ex && pipenv install --deploy --system
+
+# -- Remove Pipenv
+ONBUILD RUN pip uninstall -y pipenv
 
 
 # --------------------
