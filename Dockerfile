@@ -1,4 +1,4 @@
-FROM daocloud.io/library/python:3.6-alpine
+FROM python:3.7-alpine3.9
 
 MAINTAINER jinwen
 
@@ -8,8 +8,8 @@ ENV LANG=en_US.UTF-8 \
 
 
 RUN set -ex && \
-    echo 'https://mirror.tuna.tsinghua.edu.cn/alpine/v3.8/main' > /etc/apk/repositories && \
-    echo 'https://mirror.tuna.tsinghua.edu.cn/alpine/v3.8/community' >> /etc/apk/repositories && \
+    echo 'https://mirror.tuna.tsinghua.edu.cn/alpine/v3.9/main' > /etc/apk/repositories && \
+    echo 'https://mirror.tuna.tsinghua.edu.cn/alpine/v3.9/community' >> /etc/apk/repositories && \
     apk update
 
 RUN pip install --upgrade pip && pip config set gloabl.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
