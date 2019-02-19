@@ -10,7 +10,7 @@ ENV LANG=en_US.UTF-8 \
 RUN set -ex && \
     echo 'https://mirror.tuna.tsinghua.edu.cn/alpine/v3.9/main' > /etc/apk/repositories && \
     echo 'https://mirror.tuna.tsinghua.edu.cn/alpine/v3.9/community' >> /etc/apk/repositories && \
-    apk update
+    apk update && apk add --no-cache linux-headers build-base
 
 RUN pip install --upgrade pip && pip config set gloabl.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
     pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pipenv
